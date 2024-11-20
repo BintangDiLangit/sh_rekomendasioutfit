@@ -27,4 +27,22 @@ class Product extends Model
     {
         return $query->where('is_active', true);
     }
+
+    // Generate product number automatically
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($product) {
+            $product->product_number = self::generateProductNumber();
+        });
+    }
+
+    // Generate a unique product number
+    private static function generateProductNumber()
+    {
+        $latestProduct = self::latest('id')->first();
+        $number = $latestProduct ? intval(substr($latestProduct->product_number, -6)) + 1 : 1;
+        return 'PROD-' . str_pad($number, 6, '0', STR_PAD_LEFT);
+    }
 }

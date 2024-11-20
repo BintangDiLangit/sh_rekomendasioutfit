@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('image');
             $table->text('description')->nullable();
             $table->string('link')->nullable();
-            $table->integer('product_number');
+            $table->string('product_number');
             $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->boolean('is_active')->default(true);
             $table->integer('order')->default(0);
