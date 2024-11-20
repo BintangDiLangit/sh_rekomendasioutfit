@@ -124,28 +124,40 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const categoryButtons = document.querySelectorAll('.category-button');
-            const productCards = document.querySelectorAll('.product-card');
+            const searchInput = document.getElementById('search-input');
+            const productsContainer = document.getElementById('products-container');
+            let activeCategory = 'all';
 
-            // Add event listener to each category button
-            categoryButtons.forEach(button => {
+            searchInput.addEventListener('input', function() {
+                fetchProducts();
+            });
+
+            document.querySelectorAll('.category-button').forEach(button => {
                 button.addEventListener('click', function() {
-                    const categoryId = this.dataset.category;
+                    activeCategory = this.dataset.category;
 
-                    // Update active class for buttons
-                    categoryButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-
-                    // Filter products
-                    productCards.forEach(card => {
-                        if (categoryId === 'all' || card.dataset.category === categoryId) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
+                    searchInput.value = '';
+                    fetchProducts();
                 });
             });
+
+
+            function fetchProducts() {
+                const searchTerm = searchInput.value;
+
+                fetch(`{{ route('products.search') }}?search=${searchTerm}&category=${activeCategory}`, {
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        productsContainer.innerHTML = data.html;
+                    })
+                    .catch(error => {
+                        console.error('Error fetching products:', error);
+                    });
+            }
         });
     </script>
 @endpush

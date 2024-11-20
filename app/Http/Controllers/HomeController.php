@@ -25,4 +25,29 @@ class HomeController extends Controller
             'hasMore' => $products->hasMorePages(),
         ]);
     }
+
+    public function search(Request $request)
+    {
+        $search = $request->get('search');
+        $category = $request->get('category');
+
+        $query = Product::query();
+
+        if ($category && $category !== 'all') {
+            $query->where('category_id', $category);
+        }
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhere('description', 'like', '%' . $search . '%');
+            });
+        }
+
+        $products = $query->with('category')->get();
+
+        $html = view('products.load-more', compact('products'))->render();
+
+        return response()->json(['html' => $html]);
+    }
 }
