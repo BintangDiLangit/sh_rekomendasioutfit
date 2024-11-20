@@ -24,6 +24,7 @@
                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                         <tr>
+                            <th>ID</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Image</th>
@@ -32,6 +33,7 @@
                     </thead>
                     <tfoot>
                         <tr>
+                            <th>ID</th>
                             <th>Title</th>
                             <th>Category</th>
                             <th>Image</th>
@@ -41,6 +43,7 @@
                     <tbody>
                         @foreach ($products as $product)
                             <tr>
+                                <td>{{ $product->id }}</td>
                                 <td>{{ $product->title }}</td>
                                 <td>{{ $product->category->category_name ?? 'Uncategorized' }}</td>
                                 <td>

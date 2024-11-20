@@ -93,7 +93,7 @@
                             </div>
                         </a>
                         <div class="card-body">
-                            <p class="card-title">{{ $product->title }}</p>
+                            <p class="card-title">{{ $product->id }} - {{ $product->title }}</p>
                         </div>
                     </div>
                 </div>
