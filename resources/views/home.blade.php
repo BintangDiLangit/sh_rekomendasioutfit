@@ -8,19 +8,64 @@
 
     <!-- Header Image -->
     <div class="container px-4">
-        <img src="https://mms.img.susercontent.com/id-11134294-7r98t-lppeligru28fde" alt="Header Background"
-            class="header-image w-100 mb-4">
+        <img src="{{ isset($seo->banner_image) ? asset($seo->banner_image) : 'https://mms.img.susercontent.com/id-11134294-7r98t-lppeligru28fde' }}"
+            alt="Header Background" class="header-image w-100 mb-4">
 
         <!-- Profile Section -->
         <div class="profile-section text-center">
-            <img src="https://img.ws.mms.shopee.co.id/id-11134294-7qul9-liu8c7gun4bac1" alt="Profile"
-                class="profile-image rounded-circle mb-3" style="width: 150px; height: 150px;">
-            <h2 class="mt-3">Rekomendasi Outfit 🌷✨</h2>
+            <img src="{{ isset($seo->profile_image) ? asset($seo->profile_image) : 'https://img.ws.mms.shopee.co.id/id-11134294-7qul9-liu8c7gun4bac1' }}"
+                alt="Profile" class="profile-image rounded-circle mb-3" style="width: 150px; height: 150px;">
+            <h2 class="mt-3">{{ $seo->title ?? 'SEO_TITLE' }} 🌷✨</h2>
             <p class="text-muted">
-                ⓘ bisa search/cari di awali sesuai nomor link yang aku cantumln di video ya ✨<br>
-                ⓘ tinggal klik yang kamu cari disini~3
+                {{ $seo->description ?? 'SEO_DESC' }}
             </p>
         </div>
+        <div class="profile-section text-center">
+            <div class="social-icons">
+                @if ($seo->instagram_url)
+                    <a href="{{ $seo->instagram_url }}" target="_blank" class="social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram">
+                    </a>
+                @endif
+
+                @if ($seo->x_url)
+                    <a href="{{ $seo->x_url }}" target="_blank" class="social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="X (Twitter)">
+                    </a>
+                @endif
+
+                @if ($seo->telegram_url)
+                    <a href="{{ $seo->telegram_url }}" target="_blank" class="social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png" alt="Telegram">
+                    </a>
+                @endif
+
+                @if ($seo->tiktok_url)
+                    <a href="{{ $seo->tiktok_url }}" target="_blank" class="social-icon">
+                        <img src="https://cdn-icons-png.flaticon.com/512/3046/3046126.png" alt="TikTok">
+                    </a>
+                @endif
+            </div>
+        </div>
+
+        <style>
+            .social-icons {
+                display: flex;
+                justify-content: center;
+                gap: 15px;
+                margin: 15px 0;
+            }
+
+            .social-icon img {
+                width: 30px;
+                height: 30px;
+                transition: transform 0.3s ease;
+            }
+
+            .social-icon:hover img {
+                transform: scale(1.1);
+            }
+        </style>
 
         <!-- Category Buttons -->
         <div class="text-center mb-4">

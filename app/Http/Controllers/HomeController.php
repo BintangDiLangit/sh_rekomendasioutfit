@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Seo;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,7 +13,8 @@ class HomeController extends Controller
     {
         $categories = Category::all();
         $products = Product::with('category')->paginate(4);
-        return view('home', compact('categories', 'products'));
+        $seo = Seo::first();
+        return view('home', compact('categories', 'products', 'seo'));
     }
 
     public function loadMore(Request $request)
