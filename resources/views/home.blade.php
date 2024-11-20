@@ -15,7 +15,7 @@
         <div class="profile-section text-center">
             <img src="https://img.ws.mms.shopee.co.id/id-11134294-7qul9-liu8c7gun4bac1" alt="Profile"
                 class="profile-image rounded-circle mb-3" style="width: 150px; height: 150px;">
-            <h2 class="mt-3">enchanted trinkets 🌷✨</h2>
+            <h2 class="mt-3">Rekomendasi Outfit 🌷✨</h2>
             <p class="text-muted">
                 ⓘ bisa search/cari di awali sesuai nomor link yang aku cantumln di video ya ✨<br>
                 ⓘ tinggal klik yang kamu cari disini~3
@@ -118,6 +118,33 @@
                         loadMoreBtn.style.display = 'block';
                         loadingSpinner.style.display = 'none';
                     });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryButtons = document.querySelectorAll('.category-button');
+            const productCards = document.querySelectorAll('.product-card');
+
+            // Add event listener to each category button
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const categoryId = this.dataset.category;
+
+                    // Update active class for buttons
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Filter products
+                    productCards.forEach(card => {
+                        if (categoryId === 'all' || card.dataset.category === categoryId) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
             });
         });
     </script>
