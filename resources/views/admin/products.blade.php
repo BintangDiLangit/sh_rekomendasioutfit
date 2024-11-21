@@ -56,23 +56,19 @@
                                 </td>
                                 <td>
                                     <!-- Edit Button -->
-                                    <a href="{{ $product->link }}" class="btn btn-info btn-sm">
+                                    <a href="{{ $product->link }}" target="_blank" class="btn btn-info btn-sm">
                                         URL
                                     </a>
-                                    <a class="btn btn-warning btn-sm" data-toggle="modal"
+                                    <button class="btn btn-warning btn-sm" data-toggle="modal"
                                         data-target="#editModal-{{ $product->id }}">
                                         Edit
-                                        </button>
-                                        <button class="btn btn-warning btn-sm" data-toggle="modal"
-                                            data-target="#editModal-{{ $product->id }}">
-                                            Edit
-                                        </button>
+                                    </button>
 
-                                        <!-- Delete Button -->
-                                        <button class="btn btn-danger btn-sm" data-toggle="modal"
-                                            data-target="#deleteModal-{{ $product->id }}">
-                                            Delete
-                                        </button>
+                                    <!-- Delete Button -->
+                                    <button class="btn btn-danger btn-sm" data-toggle="modal"
+                                        data-target="#deleteModal-{{ $product->id }}">
+                                        Delete
+                                    </button>
                                 </td>
                             </tr>
 
