@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -20,25 +21,32 @@ class ProductController extends Controller
     // **2. Create a New Product (Store)**
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'title' => 'required|string|max:255',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'category_id' => 'required|exists:categories,id',
-            'link' => 'nullable|url',
-            'description' => 'nullable|string'
-        ]);
+        try {
+            $validated = $request->validate([
+                'title' => 'required|string|max:255',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'category_id' => 'required|exists:categories,id',
+                'link' => 'nullable|url',
+                'description' => 'nullable|string'
+            ]);
 
-        // Handle file upload
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = $path;
+            // Handle file upload
+            if ($request->hasFile('image')) {
+                $path = $request->file('image')->store('products', 'public');
+                $validated['image'] = $path;
+            }
+
+            // Create the product
+            Product::create($validated);
+
+            return redirect()->route('admin.products.index')
+                ->with('success', 'Product created successfully');
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage());
+            return redirect()->back()
+                ->withInput($request->all())
+                ->with('error', 'An error occurred while creating the product. Please try again.');
         }
-
-        // Create the product
-        Product::create($validated);
-
-        return redirect()->route('admin.products.index')
-            ->with('success', 'Product created successfully');
     }
 
     // **3. Get a Single Product (Show)**

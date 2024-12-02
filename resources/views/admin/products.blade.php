@@ -9,6 +9,28 @@
     <h1 class="h3 mb-2 text-gray-800">Products</h1>
     <p class="mb-4">Manage your products here.</p>
 
+    @if (session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+
+    @if (session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <!-- Button to Open Create Modal -->
     <button class="btn btn-primary mb-4" data-toggle="modal" data-target="#createModal">
         Add New Product
