@@ -13,7 +13,7 @@ class ProductController extends Controller
     // **1. Get All Products (Index)**
     public function index()
     {
-        $products = Product::with('category')->orderBy('order')->paginate(20);
+        $products = Product::with('category')->orderBy('order')->get();
         $categories = Category::all();
         return view('admin.products', compact('products', 'categories'));
     }
